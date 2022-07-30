@@ -11,6 +11,9 @@ class BinarySearchTree {
     this.root = null;
   }
 
+  //Time Complexity
+  // Best and Avg case O(logn)
+  // Worst Case O(n)
   insert(value) {
     const newNode = new Node(value);
     if (!this.root) {
@@ -39,6 +42,31 @@ class BinarySearchTree {
         currentNode = currentNode.right;
       }
     }
+  }
+
+  //Time Complexity
+  // Best and Avg case O(logn)
+  // Worst Case O(n)
+  search(value) {
+    if (!this.root) {
+      return undefined;
+    }
+
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (currentNode.value === value) {
+        return true;
+      }
+
+      if (value < currentNode.value) {
+        currentNode = currentNode.left;
+      } else {
+        currentNode = currentNode.right;
+      }
+    }
+
+    return false;
   }
 }
 
