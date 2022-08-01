@@ -68,6 +68,67 @@ class BinarySearchTree {
 
     return false;
   }
+
+  bfs() {
+    const queue = [];
+    const visited = [];
+    let visitedNode;
+
+    queue.push(this.root);
+
+    while (queue.length) {
+      visitedNode = queue.shift();
+      if (visitedNode.left) {
+        queue.push(visitedNode.left);
+      }
+
+      if (visitedNode.right) {
+        queue.push(visitedNode.right);
+      }
+      visited.push(visitedNode.value);
+    }
+
+    return visited;
+  }
+
+  preOrder() {
+    const visited = [];
+    function traverse(node) {
+      visited.push(node.value);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(this.root);
+
+    return visited;
+  }
+
+  postOrder() {
+    const visited = [];
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      visited.push(node.value);
+    }
+
+    traverse(this.root);
+
+    return visited;
+  }
+
+  inOrder() {
+    const visited = [];
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      visited.push(node.value);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(this.root);
+
+    return visited;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -79,3 +140,8 @@ bst.insert(11);
 bst.insert(12);
 bst.insert(13);
 bst.insert(9);
+
+//     10
+//   8     11
+// 5   9      12
+//                13
