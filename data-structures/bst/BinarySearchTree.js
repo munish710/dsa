@@ -129,6 +129,62 @@ class BinarySearchTree {
 
     return visited;
   }
+
+  deleteNode(val) {
+    let currentNode = this.root;
+
+    if (currentNode === null) {
+      return;
+    }
+
+    if (currentNode.value === val) {
+      return this.reArrangeBST(currentNode);
+    }
+
+    while (currentNode !== null) {
+      if (val < currentNode.value) {
+        if (currentNode.left !== null && currentNode.left.value === val) {
+          currentNode.left = this.reArrangeBST(currentNode.left);
+          return this;
+        } else {
+          currentNode = currentNode.left;
+        }
+      } else {
+        if (currentNode.right !== null && currentNode.right.value === val) {
+          currentNode.right = this.reArrangeBST(currentNode.right);
+          return this;
+        } else {
+          currentNode = currentNode.right;
+        }
+      }
+    }
+
+    return this;
+  }
+
+  reArrangeBST(nodeToBeRemoved) {
+    if (nodeToBeRemoved.left === null) {
+      return nodeToBeRemoved.right;
+    } else if (nodeToBeRemoved.right === null) {
+      return nodeToBeRemoved.left;
+    } else {
+      let rightSubTree = nodeToBeRemoved.right;
+      let largetNodeInLeftSubtree = this.findMaxInLeftSubtree(
+        nodeToBeRemoved.left
+      );
+      largetNodeInLeftSubtree.right = rightSubTree;
+
+      return nodeToBeRemoved.left;
+    }
+  }
+
+  findMaxInLeftSubtree(currentNode) {
+    if (currentNode.right === null) {
+      return currentNode;
+    }
+
+    return this.findMaxInLeftSubtree(currentNode.right);
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -140,8 +196,12 @@ bst.insert(11);
 bst.insert(12);
 bst.insert(13);
 bst.insert(9);
+bst.insert(2);
+bst.insert(6);
 
-//     10
-//   8     11
-// 5   9      12
-//                13
+bst.deleteNode(5);
+
+//      10
+//    8     11
+//  5   9      12
+//2   6            13
